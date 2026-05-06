@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GymFlow Admin</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand"><span><i class="bi bi-lightning-charge-fill"></i></span><div><h1>GymFlow</h1><small>Fitness Admin</small></div></div>
+    <a href="#dashboard" class="nav-item active"><i class="bi bi-grid-fill"></i> Dashboard</a>
+    <a href="#members" class="nav-item"><i class="bi bi-people-fill"></i> Miembros</a>
+    <a href="#trainers" class="nav-item"><i class="bi bi-person-badge-fill"></i> Entrenadores</a>
+    <a href="#sessions" class="nav-item"><i class="bi bi-calendar2-week-fill"></i> Sesiones</a>
+    <div class="guard"><i class="bi bi-shield-check"></i> Validaciones activas</div>
+  </aside>
+
+  <main class="content">
+    <section id="dashboard" class="hero">
+      <div>
+        <span class="pill"><i class="bi bi-fire"></i> Sistema online</span>
+        <h2>Controla el gimnasio como un pro</h2>
+        <p>CRUD completo para miembros, entrenadores y sesiones de entrenamiento, con validaciones visuales y conexión a Spring Boot.</p>
+        <div class="d-flex gap-2 flex-wrap mt-4">
+          <a href="#members" class="btn btn-neon"><i class="bi bi-plus-circle"></i> Registrar miembro</a>
+          <button id="refreshBtn" class="btn btn-outline-light"><i class="bi bi-arrow-clockwise"></i> Actualizar</button>
+        </div>
+      </div>
+      <div class="hero-icon"><i class="bi bi-activity"></i></div>
+    </section>
+
+    <section class="row g-4 mb-4">
+      <div class="col-md-4"><div class="stat"><i class="bi bi-people color-neon"></i><div><span>Miembros</span><strong id="membersCount">0</strong></div></div></div>
+      <div class="col-md-4"><div class="stat"><i class="bi bi-person-badge color-purple"></i><div><span>Entrenadores</span><strong id="trainersCount">0</strong></div></div></div>
+      <div class="col-md-4"><div class="stat"><i class="bi bi-calendar-check color-orange"></i><div><span>Sesiones</span><strong id="sessionsCount">0</strong></div></div></div>
+    </section>
+
+    <section class="row g-4 mb-4">
+      <div class="col-xl-6" id="members">
+        <article class="panel">
+          <div class="section-title"><div><span>Clientes</span><h3 id="memberFormTitle"><i class="bi bi-person-plus-fill"></i> Registrar miembro</h3></div><button id="cancelMemberEditBtn" class="btn btn-soft btn-sm hidden">Cancelar</button></div>
+          <form id="memberForm" class="row g-3" novalidate>
+            <input type="hidden" id="memberId" />
+            <div class="col-md-6 field"><label>Nombres</label><input id="memberFirstName" class="form-control" placeholder="Carlos"/><small>Solo letras.</small></div>
+            <div class="col-md-6 field"><label>Apellidos</label><input id="memberLastName" class="form-control" placeholder="Ramírez"/><small>Solo letras.</small></div>
+            <div class="col-md-6 field"><label>Documento</label><input id="memberDocument" class="form-control" maxlength="12" placeholder="1000123456"/><small>Solo números, 10 a 12 dígitos.</small></div>
+            <div class="col-md-6 field"><label>Celular</label><input id="memberPhone" class="form-control" maxlength="12" placeholder="3001234567"/><small>Solo números, 10 a 12 dígitos.</small></div>
+            <div class="col-md-6 field"><label>Correo</label><input id="memberEmail" class="form-control" placeholder="correo@email.com"/><small>Correo válido.</small></div>
+            <div class="col-md-6 field"><label>Membresía</label><input id="memberMembership" class="form-control" placeholder="Premium"/><small>Solo letras.</small></div>
+            <div class="col-12"><button id="memberSubmitBtn" class="btn btn-neon w-100">Guardar miembro</button></div>
+          </form>
+          <h4 class="list-title"><i class="bi bi-list-check"></i> Miembros registrados</h4>
+          <div id="memberList" class="smart-list"></div>
+        </article>
+      </div>
+
+      <div class="col-xl-6" id="trainers">
+        <article class="panel">
+          <div class="section-title"><div><span>Equipo</span><h3 id="trainerFormTitle"><i class="bi bi-person-workspace"></i> Registrar entrenador</h3></div><button id="cancelTrainerEditBtn" class="btn btn-soft btn-sm hidden">Cancelar</button></div>
+          <form id="trainerForm" class="row g-3" novalidate>
+            <input type="hidden" id="trainerId" />
+            <div class="col-md-6 field"><label>Nombres</label><input id="trainerFirstName" class="form-control" placeholder="Laura"/><small>Solo letras.</small></div>
+            <div class="col-md-6 field"><label>Apellidos</label><input id="trainerLastName" class="form-control" placeholder="Gómez"/><small>Solo letras.</small></div>
+            <div class="col-md-6 field"><label>Especialidad</label><input id="trainerSpecialty" class="form-control" placeholder="Funcional"/><small>Solo letras.</small></div>
+            <div class="col-md-6 field"><label>Celular</label><input id="trainerPhone" class="form-control" maxlength="12" placeholder="3111234567"/><small>Solo números, 10 a 12 dígitos.</small></div>
+            <div class="col-12 field"><label>Correo</label><input id="trainerEmail" class="form-control" placeholder="trainer@gym.com"/><small>Correo válido.</small></div>
+            <div class="col-12"><button id="trainerSubmitBtn" class="btn btn-purple w-100">Guardar entrenador</button></div>
+          </form>
+          <h4 class="list-title"><i class="bi bi-list-stars"></i> Entrenadores registrados</h4>
+          <div id="trainerList" class="smart-list"></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="sessions" class="panel mb-4">
+      <div class="section-title"><div><span>Agenda</span><h3 id="sessionFormTitle"><i class="bi bi-calendar2-plus-fill"></i> Programar sesión</h3></div><button id="cancelSessionEditBtn" class="btn btn-soft btn-sm hidden">Cancelar</button></div>
+      <form id="sessionForm" class="row g-3" novalidate>
+        <input type="hidden" id="sessionId" />
+        <div class="col-md-4 field"><label>Fecha y hora</label><input id="sessionDate" type="datetime-local" class="form-control"/><small>No puede ser en el pasado.</small></div>
+        <div class="col-md-4 field"><label>Miembro</label><select id="sessionMember" class="form-select"><option value="">Seleccione miembro</option></select><small>Obligatorio.</small></div>
+        <div class="col-md-4 field"><label>Entrenador</label><select id="sessionTrainer" class="form-select"><option value="">Seleccione entrenador</option></select><small>Obligatorio.</small></div>
+        <div class="col-md-4 field"><label>Tipo de entrenamiento</label><input id="trainingType" class="form-control" placeholder="Cardio"/><small>Solo letras.</small></div>
+        <div class="col-md-4 field"><label>Duración</label><input id="durationMinutes" type="number" class="form-control" min="15" max="240" placeholder="60"/><small>Entre 15 y 240 minutos.</small></div>
+        <div class="col-md-4 field"><label>Notas</label><input id="sessionNotes" class="form-control" maxlength="255" placeholder="Rutina inicial"/><small>Opcional, máximo 255 caracteres.</small></div>
+        <div class="col-12"><button id="sessionSubmitBtn" class="btn btn-orange w-100">Guardar sesión</button></div>
+      </form>
+    </section>
+
+    <section class="panel">
+      <div class="section-title"><div><span>Seguimiento</span><h3><i class="bi bi-table"></i> Sesiones programadas</h3></div></div>
+      <div class="table-responsive">
+        <table class="table table-dark table-hover gym-table">
+          <thead><tr><th>ID</th><th>Fecha</th><th>Miembro</th><th>Entrenador</th><th>Tipo</th><th>Duración</th><th>Notas</th><th>Acciones</th></tr></thead>
+          <tbody id="sessionTable"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <div id="toastBox" class="toast-box"></div>
+  <script src="validation.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
